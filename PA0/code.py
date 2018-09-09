@@ -14,6 +14,8 @@ import tensorflow as tf
 # A12345678 being an example A#, 8 is the last digit, 7 is the second to last digit, 
 # 6 is the third to the last digit, etc.
 
+anumber = 'A20351527'
+
 # Please implement what is needed at the TODO sections,
 # do not modify the other parts of the code.
 
@@ -26,21 +28,29 @@ result_list.append(keras.__version__)
 # "the last digit of your A#", where the mean (i.e., loc) is 5, and standard deviation (i.e., scale) is 15.
 # Store the result in a variable called value1.
 # Do not change the following line. Obviously, your code needs to preceed the following line :).
+value1 = st.norm.pdf(int(anumber[-1]), 5, 15)
 result_list.append(value1)
 
 #TODO: 2. Set the seed of Numpy using np.random.seed() function, and use "the second to the last digit of your A#" as the seed.
 #         Then sample a value from the uniform distribution of [0, 1) (use numpy.random.rand()). 
 #		  The result should be assigned to value2.
+np.random.seed(int(anumber[-2]))
+value2 = np.random.rand()
 result_list.append(value2)
 
 #TODO: 3. Using the tf.random_normal() function, sample a random value from the normal distribution 
 #		  with mean=-1 and standard deviaion=4, and use "the third digit to the last of your A#" as the seed.
 #         The result should be assigned to value3.
+normal_rv = tf.random_normal([1,], mean=-1, stddev=4, seed=int(anumber[-3]))
+with tf.Session() as sess:
+    value3 = sess.run(normal_rv)[0]
 result_list.append(value3)
 
 #TODO: 4. Using sklearn.utils.shuffle(), shuffle the array of [0, 1,...,11]. Set the seed to "the fourth to 
 #         the last digit of your A#". 
 #		  The result should be assigned to value4.
+array = np.arange(12)
+value4 = sk.utils.shuffle(array, random_state=int(anumber[-4]))
 result_list.append(value4)
 
 # Once you run the code, it will generate a "result.txt" file. Do not modify the following code.
