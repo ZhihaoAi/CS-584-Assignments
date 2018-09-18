@@ -8,6 +8,8 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier 
 from sklearn.model_selection import train_test_split
 
+from sklearn.metrics import accuracy_score
+
 
 # Load Datasets
 # The “Xs” has 10 entries, each has the feature matrix of a dataset, and the “ys” has 10 entries, each has the target array.
@@ -45,7 +47,18 @@ test_ac = np.zeros((10, 15))
 
 # Write your code below this line.
 
-
+for i_dataset in range(10):
+    X = Xs[i_dataset]
+    y = ys[i_dataset]
+    X_train, X_test, y_train, y_test = train_test_split(X,
+                                                        y,
+                                                        test_size=1./3, 
+                                                        random_state=515)
+    for i in range(15):
+        dt = DecisionTreeClassifier(max_depth=i+1, random_state=527)
+        dt = dt.fit(X_train, y_train)
+        train_ac[i_dataset][i] = accuracy_score(y_train, dt.predict(X_train))
+        test_ac[i_dataset][i] = accuracy_score(y_test, dt.predict(X_test))
 
 
 
